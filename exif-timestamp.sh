@@ -15,13 +15,13 @@ fi
 DIRECTORY="$1"
 
 # Process all image and video files in the directory and its subdirectories
-find "$DIRECTORY" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.mp4" -o -iname "*.mov" -o -iname "*.avi" -o -iname "*.mkv" \) | while read -r FILE; do
+find "$DIRECTORY" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png"  -o -iname "*.heic"   -o -iname "*.mp4" -o -iname "*.mov" -o -iname "*.avi" -o -iname "*.mkv" \) | while read -r FILE; do
     # Determine if the file is an image or video based on extension
     EXTENSION="${FILE##*.}"
     TAG=""
 
     case "$EXTENSION" in
-        jpg|jpeg|png)
+        jpg|jpeg|png|heic)
             TAG="DateTimeOriginal"
             ;;
         mp4|mov|avi|mkv)
