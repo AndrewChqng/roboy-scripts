@@ -1,0 +1,17 @@
+#pm list packages -d
+package:com.amazon.bueller.photos
+package:com.amazon.sneakpeek
+package:com.fireos.arcus.proxy
+package:com.amazon.firehomestarter
+package:com.amazon.device.sale.service
+package:com.amazon.client.metrics
+package:com.amazon.imdb.tv.android.app
+package:com.amazon.device.software.ota
+package:com.amazon.device.software.ota.override
+package:com.amazon.adep
+package:com.amazon.tv.livetv
+package:com.amazon.bueller.music
+package:com.amazon.dummy.music
+
+#bush overscan
+settings put global overscan_values "0.024 0.023 0.019 0.030" 
