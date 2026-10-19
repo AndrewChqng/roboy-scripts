@@ -103,7 +103,62 @@ kscreen-doctor output.eDP-1.mode.1 output.eDP-1.position.0,0 output.HDMI-A-1.ena
 
 ---
 
+## KDE Plasma / Wayland: Custom Touchpad Gestures (`InputActions`)
+
+Instructions for configuring custom multi-finger gestures on KDE Plasma 6 (Wayland) to control volume, screen brightness, and media playback.
+
+### Gestures Mapped
+- **4 Fingers Swipe Up / Down**: Volume control (`volumeup` / `volumedown`)
+- **4 Fingers Swipe Left / Right**: Display brightness control (`brightnessup` / `brightnessdown`)
+- **4 Fingers Tap**: Media Play / Pause toggle (`playpause`)
+
+### 1. Installation
+Install `inputactions-kwin` (available on Arch / CachyOS via chaotic-aur / AUR):
+
+```bash
+sudo pacman -S inputactions-kwin
+```
+
+### 2. Configuration
+Copy the configuration template [`inputactions-config.yaml`](inputactions-config.yaml) to `~/.config/inputactions/config.yaml`:
+
+```bash
+mkdir -p ~/.config/inputactions
+cp inputactions-config.yaml ~/.config/inputactions/config.yaml
+```
+
+### 3. Enable Plugin in KWin
+Enable the effect immediately in KWin:
+
+```bash
+qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.loadEffect kwin_gestures
+```
+
+Ensure it persists across reboots:
+
+```bash
+kwriteconfig6 --file kwinrc --group Plugins --key kwin_gesturesEnabled true
+```
+
+### 4. Enable Tap Detection Permissions (udev)
+While swipe gestures use KWin's built-in gesture engine, multi-finger tap detection requires reading raw touchpad events via `libevdev`. Grant user access to the touchpad device:
+
+```bash
+echo 'ENV{ID_INPUT_TOUCHPAD}=="1", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/71-touchpad.rules && sudo udevadm trigger
+```
+
+### 5. Reloading Configuration
+To reload or verify your configuration at any time:
+
+```bash
+inputactions config reload
+inputactions config issues
+```
+
+---
+
 ### Credits & Disclaimers
 
-- **AI Assistance**: Documented and verified with assistance from Antigravity (Google DeepMind) by inspecting `kscreen-doctor` CLI parameters and KWin Wayland display configuration schemas.
-- **Disclaimer**: Custom display timings and refresh rate modifications interact directly with display hardware and panel timing limits. Applying unsupported refresh rates or out-of-spec timings can lead to black screens, signal instability, or potential display hardware damage. Experimental use only; use at your own discretion.
+- **AI Assistance**: Documented and implemented with assistance from Antigravity (Google DeepMind) by analyzing KWin Wayland gesture architectures and configuring InputActions.
+- **Disclaimer**: System configurations, hardware udev permissions, and custom display timings interact directly with hardware drivers and compositor components. Experimental use only; use at your own discretion.
+

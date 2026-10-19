@@ -1,0 +1,45 @@
+# Touchpad Gestures configuration for KDE Plasma Wayland (InputActions)
+# Target file path: ~/.config/inputactions/config.yaml
+
+touchpad:
+  gestures:
+    # 4 fingers UP/DOWN -> Volume
+    - type: swipe
+      fingers: 4
+      direction: up_down
+
+      actions:
+        - on: update
+          interval: -20
+          input:
+            - keyboard: [ volumeup ]
+
+        - on: update
+          interval: 20
+          input:
+            - keyboard: [ volumedown ]
+
+    # 4 fingers LEFT/RIGHT -> Brightness
+    - type: swipe
+      fingers: 4
+      direction: left_right
+
+      actions:
+        - on: update
+          interval: -25
+          input:
+            - keyboard: [ brightnessdown ]
+
+        - on: update
+          interval: 25
+          input:
+            - keyboard: [ brightnessup ]
+
+    # 4 fingers TAP -> Play / Pause
+    - type: tap
+      fingers: 4
+
+      actions:
+        - on: begin
+          input:
+            - keyboard: [ playpause ]
